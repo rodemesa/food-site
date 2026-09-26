@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedery - Love the Food You Eat</title>
+<meta name="description" content="Feedery - Love the Food You Eat">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<style>
+  :root{
+	--white:#FFFFFF;
+    --cream:#EFE8E2;
+    --cream-raised:#EFE8E2;
+    --orange:#F26128;
+    --orange-soft:#F26128;
+    --burgundy:#941A2C;
+    --burgundy-deep:#941A2C;
+    --rust:#A8502E;
+    --line:rgba(36,24,18,0.14);
+    --line-strong:rgba(36,24,18,0.3);
+    --max:1180px;
+    --gutter:clamp(1.25rem, 4vw, 3.5rem);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--white);
+    font-family:"Inter", sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:"Inter", sans-serif;
+    font-weight: 600;
+	color:var(--orange);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  a{color:inherit;}
+  img{display:block; max-width:100%;}
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--burgundy-deep);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding-left:var(--gutter);
+    padding-right:var(--gutter);
+  }
+
+  /* Nav */
+  .nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0.9rem var(--gutter);
+    background:rgba(242,97,40,0.95);
+    backdrop-filter:blur(8px);
+    border-bottom:0px solid transparent;
+    transition:border-color 0.3s ease;
+  }
+  .nav.is-scrolled{border-bottom-color:var(--line);}
+ .nav-mark{
+    position:relative;
+    overflow:hidden;
+    background:var(--orange);
+  }
+  .nav-mark img{
+    width:100%; height:100%;
+    object-fit:cover;
+    mix-blend-mode:normal;
+}
+  .nav-links{
+    display:flex;
+    gap:clamp(1rem,3vw,2rem);
+    list-style:none;
+    margin:0; padding:0;
+    font-size:0.92rem;
+  }
+  .nav-links a{
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:border-color 0.2s ease;
+  }
+  .nav-links a:hover{border-color:var(--white);}
+  @media (max-width:640px){ .nav-links{display:none;} }
+
+  /* Buttons */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:0.85rem 1.6rem;
+    border-radius:999px;
+    background:var(--burgundy);
+    color:var(--cream-raised);
+    text-decoration:none;
+	text-transform: uppercase;
+    font-size:0.95rem;
+    font-weight:500;
+    border:1px solid var(--burgundy);
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:color 0.35s ease, transform 0.15s ease;
+  }
+  .btn::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:var(--burgundy-deep);
+    transform:translateX(-101%);
+    transition:transform 0.35s cubic-bezier(.65,0,.35,1);
+    z-index:0;
+  }
+  .btn span{position:relative; z-index:1;}
+  .btn:hover::before{transform:translateX(0);}
+  .btn:active{transform:scale(0.98);}
+  .btn.ghost{
+    background:transparent;
+    color:var(--white);
+	border-color:var(--white);
+  }
+  .btn.ghost::before{background:var(--burgundy);}
+  .btn.ghost:hover{color:var(--white);}
+
+  /* Hero */
+  .hero{
+    padding:clamp(7rem,16vw,9rem) 0 clamp(3.5rem,7vw,5rem);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:0.9fr 0.92fr;
+    gap:clamp(2rem,5vw,4rem);
+    align-items:center;
+  }
+  @media (max-width:900px){
+    .hero-grid{
+		grid-template-columns:1fr;
+	    padding:0px 10px 0px 10px;
+	  }
+  }
+  .hero-eyebrow{
+    color:var(--burgundy);
+    font-size:0.95rem;
+    margin:0 0 1rem;
+  }
+  .hero-title{
+    font-size:clamp(2.5rem, 5.6vw, 4.2rem);
+    line-height:1.06;
+    max-width:14ch;
+  }
+  .hero-title em{ font-style:italic; color:var(--orange); }
+  .hero-copy{
+    margin:1.4rem 0 2rem;
+    max-width:42ch;
+    color:var(--orange);
+    font-size:1.05rem;
+  }
+  .hero-cta{
+    display:flex;
+    align-items:center;
+    gap:1.4rem;
+    flex-wrap:wrap;
+  }
+  .hero-cta small{
+    color:var(--orange);
+    font-size:0.85rem;
+  }
+
+  .hero-figure{
+    position:relative;
+    border-radius:40px;
+    overflow:hidden;
+    aspect-ratio:1/1;
+    background:var(--orange);
+  }
+  .hero-figure img{
+    width:100%; height:100%;
+    object-fit:cover;
+    mix-blend-mode:normal;
+  }
+  .hero-figure::after{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none;
+  }
+  .hero-tag{
+    position:absolute;
+    left:1.1rem; bottom:1.1rem;
+    background:var(--cream-raised);
+    color:var(--orange);
+    padding:0.6rem 1rem;
+    border-radius:10px;
+    font-size:0.85rem;
+    display:flex;
+    gap:0.6rem;
+    align-items:center;
+    box-shadow:0 6px 18px rgba(36,24,18,0.18);
+  }
+  .hero-tag strong{ font-family:"Inter", sans-serif; font-weight:500; }
+
+  /* Value props */
+  .section{
+    padding:clamp(3.5rem,7vw,5.5rem) 0;
+    border-top:1px solid var(--line);
+  }
+  .values{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:clamp(1.5rem,4vw,2.5rem);
+  }
+  @media (max-width:760px){ .values{grid-template-columns:1fr;} }
+  .value h3{
+    font-size:1.3rem;
+    margin-bottom:0.6rem;
+  }
+  .value p{
+    color:var(--orange-soft);
+    margin:0;
+    max-width:32ch;
+    font-size:0.98rem;
+  }
+  .value-index{
+    display:block;
+    font-family:"Inter", sans-serif;
+    font-style:italic;
+    color:var(--rust);
+    margin-bottom:0.8rem;
+  }
+
+  /* Testimonial */
+  .testimonial{
+    max-width:640px;
+  }
+  .testimonial p{
+    font-family:"Inter", sans-serif;
+    font-size:clamp(1.3rem,2.6vw,1.7rem);
+    font-weight:400;
+    font-style:italic;
+    line-height:1.4;
+    margin:0 0 1.2rem;
+  }
+  .testimonial cite{
+    font-style:normal;
+    color:var(--orange-soft);
+    font-size:0.9rem;
+  }
+
+  /* Final CTA */
+  .final-cta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:2rem;
+    flex-wrap:wrap;
+  }
+  .final-cta h2{
+    font-size:clamp(1.9rem,4vw,2.7rem);
+    max-width:16ch;
+  }
+
+  footer{
+    padding:1.75rem var(--gutter) 2.5rem;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:1rem;
+    font-size:0.85rem;
+    color:var(--orange-soft);
+    max-width:var(--max);
+    margin:0 auto;
+    border-top:1px solid var(--line);
+  }
+  footer a{ text-decoration:underline; text-underline-offset:3px; }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+ <div class="nav-mark">
+        <img src="https://cdn.prod.website-files.com/6a32c4bca719967517c217ca/6ab81852f1de06999fcdc2d8_Wordmark_White_Small.png" alt="Feedery Brands" loading="eager">
+ </div>
+	
+<!-- START SECTION	
+  <ul class="nav-links">
+    <li><a href="#values">Our Brands</a></li>
+    <li><a href="#story">Our Mission</a></li>
+  </ul>-->
+	
+  <a class="btn ghost" href="mailto:hello@feedery.ca"><span>Contact Us</span></a> 
+</nav>
+
+<main id="top">
+
+  <header class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <h1 class="hero-title">Love The Food You Eat</h1>
+        <p class="hero-copy">Feedery is a multi-brand quick-service restaurant concept featuring proprietary brands that reimagine familiar favorites—from crispy fried chicken tenders and burgers to fresh poke bowls and vibrant salads—with high-quality ingredients and a better-for-you approach. <br><br>Each brand offers a fresh take on everyday dining, giving guests convenient, flavorful options that balance craveability with quality and nutrition.</p>
+        <div class="hero-cta">
+          <a class="btn" href="mailto:hello@feedery.ca"><span>Contact Us</span></a>
+        </div>
+      </div>
+      <div class="hero-figure">
+        <img src="https://cdn.prod.website-files.com/6a32c4bca719967517c217ca/6ab815a8167f1da71a8d30b7_BRANDS_IMAGE.jpg" alt="Feedery Brands" loading="eager">
+      </div>
+    </div>
+  </header>
+<!-- START SECTION
+  <section class="section" id="values">
+    <div class="wrap values">
+      <div class="value">
+        <span class="value-index">One</span>
+        <h3>Roast date on every bag</h3>
+        <p>Not a "best by" date — the actual day it came out of the drum. If it's more than three weeks old, we didn't send it.</p>
+      </div>
+      <div class="value">
+        <span class="value-index">Two</span>
+        <h3>One farm per bag</h3>
+        <p>No house blends. Each bag names the farm, the elevation, and the person who grew it, so you can find what you actually like.</p>
+      </div>
+      <div class="value">
+        <span class="value-index">Three</span>
+        <h3>Change it anytime</h3>
+        <p>Swap grind, swap origin, skip a month — all from one page, no call required.</p>
+      </div>
+    </div>
+  </section>
+END SECTION -->
+</main>
+
+<footer>
+  <span>FEEDERY 2026</span>
+  <span><a href="mailto:hello@feedery.ca">hello@feedery.ca</a></span>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+</body>
+</html>
